@@ -129,6 +129,12 @@ variable "additional_security_group_ids" {
   default     = []
 }
 
+variable "additional_user_data" {
+  description = "Additional user data to be passed to the NAT instance"
+  type        = string
+  default     = ""
+}
+
 variable "use_ssh" {
   description = "Whether or not to enable SSH access to the NAT instance"
   type        = bool
