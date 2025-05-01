@@ -78,12 +78,12 @@ resource "aws_launch_template" "main" {
     }
   }
 
-  user_data = format("%s%s",templatefile("${path.module}/templates/user_data.sh", {
+  user_data = base64encode(format("%s%s",templatefile("${path.module}/templates/user_data.sh", {
     TERRAFORM_ENI_ID                 = aws_network_interface.main.id
     TERRAFORM_EIP_ID                 = length(var.eip_allocation_ids) != 0 ? var.eip_allocation_ids[0] : ""
     TERRAFORM_CWAGENT_ENABLED        = var.use_cloudwatch_agent ? "true" : ""
     TERRAFORM_CWAGENT_CFG_PARAM_NAME = local.cwagent_param_name != null ? local.cwagent_param_name : ""
-  }),var.additional_user_data)
+  }),var.additional_user_data))
 
   # Enforce IMDSv2
   metadata_options {
